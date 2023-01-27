@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Assorted hacking pages
+title: Mitch's assorted hacking pages
 email: "mjd then an at sign followed by afork.com"
 description: >- # this means to ignore newlines until "baseurl:"
   This site contains random articles documenting my hacking adventures.

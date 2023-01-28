@@ -75,7 +75,9 @@ it's quite quick and reproducible.  There'll be a lot more of these soon.
 
 ![Our modular garden ](/assets/images/2023-01-06-planter-boxes-our-garden.jpg)
 
-Bonus: I also made a deeper box using corflute and planks from a shipping pallet, held together with tek screws.  It's really rough, only intended to last one season:
+Bonus: I also made a deeper box (shown above) using corflute and planks from a
+shipping pallet, held together with tek screws.  It's really rough, only
+intended to last one season:
 
 ![Building a deep box](/assets/images/2023-01-06-planter-boxes-big-box-1.jpg)
 

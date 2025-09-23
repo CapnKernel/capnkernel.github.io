@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://capnkernel.github.io/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url>
+<loc>https://capnkernel.github.io/</loc>
+</url>
+<url>
+<loc>https://capnkernel.github.io/inventree-100-install.html</loc>
+<lastmod>2025-09-23T14:35:12+10:00</lastmod>
+</url>
+<url>
+<loc>https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html</loc>
+<lastmod>2025-09-23T14:11:32+10:00</lastmod>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/7/planter-boxes-soil-1.jpg</image:loc>
+<image:title><![CDATA[Lots of soil]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://capnkernel.github.io/thi-sis-my-first-post.html</loc>
+<lastmod>2025-09-23T14:35:23+10:00</lastmod>
+</url>
+</urlset>

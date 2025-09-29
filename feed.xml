@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-09-23T14:35:12+10:00</updated>
+    <updated>2025-09-29T16:15:40+10:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -234,7 +234,21 @@ inventree@portal:~$
 <p>Check also for the existence of <code>/var/run/uwsgi/inventree.sock</code>.</p><p>The uWSGI log can be viewed with:</p><pre><code>sudo journalctl -u uwsgi-emperor
 </code></pre>
 <p>Add <code>-f</code> to tail the log.</p><h2 id="setting-up-caddy-web-proxy">Setting up caddy (web proxy)</h2>
-<p>Amend <code>/etc/caddy/Caddyfile</code> to add this:</p><pre><code>itree.superlab.au {
+<p>Amend <code>/etc/caddy/Caddyfile</code> to add this:</p><pre><code># CORS headers control (used for static and media files)
+(cors-headers) {
+    header Allow GET,HEAD,OPTIONS
+    header Access-Control-Allow-Origin *
+    header Access-Control-Allow-Methods GET,HEAD,OPTIONS
+    header Access-Control-Allow-Headers Authorization,Content-Type,User-Agent
+ 
+    @cors_preflight{args[0]} method OPTIONS
+ 
+    handle @cors_preflight{args[0]} {
+        respond &quot;&quot; 204
+    }
+}
+
+itree.example.com {
         log {
                 output file /var/log/caddy/itree.log
                 format filter {
@@ -247,6 +261,11 @@ inventree@portal:~$
 
         encode gzip
 
+        # Add request body size limit for file uploads
+        request_body {
+                max_size 100MB
+        }
+
         header {
                 Strict-Transport-Security max-age=31536000;
         }
@@ -257,26 +276,34 @@ inventree@portal:~$
         }
 
         handle_path /static/* {
+                import cors-headers static
                 root * /home/inventree/data/static
                 file_server
         }
 
         handle_path /media/* {
+                import cors-headers media
                 root * /home/inventree/data/media
                 file_server
+                # Authentication for media files
+                forward_auth unix//run/uwsgi/inventree.sock {
+                        uri /auth/
+                }
         }
 
         reverse_proxy unix//run/uwsgi/inventree.sock
 }
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile
 </code></pre>
-<p>Restart caddy:</p><pre><code>sudo systemctl reload caddy
+<p>Note: Change <code>itree.example.com</code> to a suitable hostname.  You’ll also need to create A or CNAME DNS records for this host. </p><p>(Basis: <a href="https://github.com/inventree/inventree/blob/master/contrib/container/Caddyfile">https://github.com/inventree/inventree/blob/master/contrib/container/Caddyfile</a>)</p><p>Restart caddy:</p><pre><code>sudo systemctl reload caddy
 </code></pre>
 <p>The caddy log can be viewed with:</p><pre><code>sudo journalctl -u caddy
 </code></pre>
 <p>Add <code>-f</code> to tail the log.</p><h2 id="todo">TODO</h2>
 <ul>
 <li>Backups - need to check whether the Inventree worker is kicking off backups.<br><a href="https://docs.inventree.org/en/latest/start/backup/#daily-backup">https://docs.inventree.org/en/latest/start/backup/#daily-backup</a></li>
-<li><code>/media</code>: <strong>FIXME: The caddy stuff still needs tweaking, esp wrt protection of <code>/media</code> via <code>forward_auth</code>.</strong><br>Example from the docs:<br><a href="https://github.com/inventree/inventree/blob/master/contrib/container/Caddyfile">https://github.com/inventree/inventree/blob/master/contrib/container/Caddyfile</a></li>
 </ul>
 
             ]]>

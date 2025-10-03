@@ -3,12 +3,32 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-09-29T16:18:29+10:00</updated>
+    <updated>2025-10-03T14:58:54+10:00</updated>
     <author>
         <name>Mitch</name>
     </author>
     <id>https://capnkernel.github.io</id>
 
+    <entry>
+        <title>Planter boxes using corflute and milk crates</title>
+        <author>
+            <name>Mitch</name>
+        </author>
+        <link href="https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html"/>
+        <id>https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html</id>
+
+        <updated>2025-09-23T14:11:32+10:00</updated>
+            <summary>
+                <![CDATA[
+                    (From Jan 2023, we’ve moved since) &lt;coming soon&gt;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>(From Jan 2023, we’ve moved since)</p><p>&lt;coming soon&gt;</p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Inventree 1.0.1 install</title>
         <author>

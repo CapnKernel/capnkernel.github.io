@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-03T15:01:17+10:00</updated>
+    <updated>2025-10-03T15:03:06+10:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -325,7 +325,7 @@ itree.example.com {
 </code></pre>
 <p>Add <code>-f</code> to tail the log.</p><h2 id="todo">TODO</h2>
 <ul>
-<li>Backups - need to check whether the Inventree worker is kicking off backups.<br><a href="https://docs.inventree.org/en/latest/start/backup/#daily-backup">https://docs.inventree.org/en/latest/start/backup/#daily-backup</a></li>
+<li>Backups - need to check whether the InvenTree worker is kicking off backups.<br><a href="https://docs.inventree.org/en/latest/start/backup/#daily-backup">https://docs.inventree.org/en/latest/start/backup/#daily-backup</a></li>
 </ul>
 
             ]]>

@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-03T15:03:06+10:00</updated>
+    <updated>2025-10-06T13:11:36+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -32,7 +32,7 @@ a truck:</p><figure class="post__image"><img src="https://capnkernel.github.io/m
         </content>
     </entry>
     <entry>
-        <title>Inventree 1.0.1 install</title>
+        <title>Inventree 1.0.x install</title>
         <author>
             <name>Mitch</name>
         </author>
@@ -173,7 +173,7 @@ mysql&gt; EXIT;
 </code></pre>
 <h2 id="download-front-end-react-app-files">Download front end react app files</h2>
 <pre><code>TAG=v$(awk &#39;match($0, &quot;^INVENTREE_SW_VERSION = \047(.*)\047&quot;, m) {print m[1]}&#39; &lt; ./src/backend/InvenTree/InvenTree/version.py)
-mkdir ~/src/src/backend/InvenTree/web/static
+mkdir -p ~/src/src/backend/InvenTree/web/static
 invoke frontend-download --tag $TAG
 invoke static
 </code></pre>
@@ -323,7 +323,14 @@ itree.example.com {
 </code></pre>
 <p>The caddy log can be viewed with:</p><pre><code>sudo journalctl -u caddy
 </code></pre>
-<p>Add <code>-f</code> to tail the log.</p><h2 id="todo">TODO</h2>
+<p>Add <code>-f</code> to tail the log.</p><h2 id="backups">Backups</h2>
+<p>Backups of the database and of the media files are done to <code>~/data/backup</code> once a day by the worker.  Database backups end in <code>.dump.gz</code>, and media backups end in <code>.tar.gz</code>.  A cron job, run by the <code>uwsgi</code> user, sends the backups offsite every four hours using <code>rsync</code>.  The backup filenames contain the hostname rather than the virtual host name due to <a href="https://github.com/inventree/InvenTree/issues/10488">limitations in InvenTree</a>.</p><h2 id="upgrading">Upgrading</h2>
+<pre><code>cd ~/src
+git pull
+</code></pre>
+<p>Then do the steps in the <strong>Download front end react app files</strong> section above.  Then:</p><pre><code>sudo touch /etc/uwsgi-emperor/vassals/inventree.ini
+</code></pre>
+<p>You’ll need to reload any web pages you have open.</p><h2 id="todo">TODO</h2>
 <ul>
 <li>Backups - need to check whether the InvenTree worker is kicking off backups.<br><a href="https://docs.inventree.org/en/latest/start/backup/#daily-backup">https://docs.inventree.org/en/latest/start/backup/#daily-backup</a></li>
 </ul>

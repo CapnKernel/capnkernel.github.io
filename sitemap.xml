@@ -5,12 +5,16 @@
 <loc>https://capnkernel.github.io/</loc>
 </url>
 <url>
+<loc>https://capnkernel.github.io/chatgpt-is-almost-useful-for-whole-picture-coding.html</loc>
+<lastmod>2025-10-06T23:06:19+11:00</lastmod>
+</url>
+<url>
 <loc>https://capnkernel.github.io/inventree-100-install.html</loc>
 <lastmod>2025-10-06T13:25:51+11:00</lastmod>
 </url>
 <url>
 <loc>https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html</loc>
-<lastmod>2025-10-06T21:47:54+11:00</lastmod>
+<lastmod>2025-10-06T23:01:56+11:00</lastmod>
 <image:image>
 <image:loc>https://capnkernel.github.io/media/posts/8/planter-boxes-soil-1.jpg</image:loc>
 <image:title><![CDATA[Lots of soil]]></image:title>
@@ -57,11 +61,51 @@
 </image:image>
 </url>
 <url>
-<loc>https://capnkernel.github.io/thi-sis-my-first-post.html</loc>
-<lastmod>2025-10-06T14:05:47+11:00</lastmod>
+<loc>https://capnkernel.github.io/right-angle-mounting-of-fuses-a-small-adaptor-board.html</loc>
+<lastmod>2025-10-06T23:01:45+11:00</lastmod>
 <image:image>
-<image:loc>https://capnkernel.github.io/media/posts/1/planter-boxes-freecad-fold.jpg</image:loc>
-<image:title><![CDATA[]]></image:title>
+<image:loc>https://capnkernel.github.io/media/posts/9/proud-fuse.jpg</image:loc>
+<image:title><![CDATA[Autopilot pic, showing high fuse]]></image:title>
 </image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/fuse-pics.jpg</image:loc>
+<image:title><![CDATA[Pic of standard and mini fuses, plus holders]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/1-schematic.png</image:loc>
+<image:title><![CDATA[Schematic]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/2-std-footprint.png</image:loc>
+<image:title><![CDATA[Standard fuse holder footprint]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/3-mini-footprint.png</image:loc>
+<image:title><![CDATA[Mini fuse holder footprint]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/4-legs-footprint.png</image:loc>
+<image:title><![CDATA[PCB leg footprint]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/5-std-pcb.png</image:loc>
+<image:title><![CDATA[PCB for standard fuse holder]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/6-mini-pcb.png</image:loc>
+<image:title><![CDATA[PCB for mini fuse holder]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/7-fit-test.jpg</image:loc>
+<image:title><![CDATA[Fit test]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/9/8-jlc.png</image:loc>
+<image:title><![CDATA[PCB renders from JLC]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://capnkernel.github.io/using-virtual-environments-to-separate-project-and-os-python-software.html</loc>
+<lastmod>2025-10-06T22:57:55+11:00</lastmod>
 </url>
 </urlset>

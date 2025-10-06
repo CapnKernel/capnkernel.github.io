@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en-gb"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Using virtual environments to separate project and OS Python software - Mitch&#x27;s Notes</title><meta name="description" content="So, if you need a package that’s part of your OS that didn’t get installed at install time, you can install them later with apt or dnf. And, some packages on your computer may be written in Python. The collection of software that makes up&hellip;"><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://capnkernel.github.io/using-virtual-environments-to-separate-project-and-os-python-software.html"><link rel="alternate" type="application/atom+xml" href="https://capnkernel.github.io/feed.xml" title="Mitch&#x27;s Notes - RSS"><link rel="alternate" type="application/json" href="https://capnkernel.github.io/feed.json" title="Mitch&#x27;s Notes - JSON"><meta property="og:title" content="Using virtual environments to separate project and OS Python software"><meta property="og:site_name" content="Mitch's Notes"><meta property="og:description" content="So, if you need a package that’s part of your OS that didn’t get installed at install time, you can install them later with apt or dnf. And, some packages on your computer may be written in Python. The collection of software that makes up&hellip;"><meta property="og:url" content="https://capnkernel.github.io/using-virtual-environments-to-separate-project-and-os-python-software.html"><meta property="og:type" content="article"><link rel="stylesheet" href="https://capnkernel.github.io/assets/css/style.css?v=11bee19e86e8eda2cf9a60efd975666d"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://capnkernel.github.io/using-virtual-environments-to-separate-project-and-os-python-software.html"},"headline":"Using virtual environments to separate project and OS Python software","datePublished":"2024-02-27T12:00+11:00","dateModified":"2025-10-06T22:57+11:00","description":"So, if you need a package that’s part of your OS that didn’t get installed at install time, you can install them later with apt or dnf. And, some packages on your computer may be written in Python. The collection of software that makes up&hellip;","author":{"@type":"Person","name":"Mitch","url":"https://capnkernel.github.io/authors/mitch/"},"publisher":{"@type":"Organization","name":"Mitch"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript></head><body class="post-template"><header class="top js-header"><a class="logo" href="https://capnkernel.github.io/">Mitch&#x27;s Notes</a></header><main class="post"><article class="content"><div class="hero hero--noimage"><header class="hero__content"><div class="wrapper"><h1>Using virtual environments to separate project and OS Python software</h1><div class="feed__meta content__meta"><a href="https://capnkernel.github.io/authors/mitch/" class="feed__author">Mitch</a> <time datetime="2024-02-27T12:00" class="feed__date">February 27, 2024</time></div></div></header></div><div class="entry-wrapper content__entry"><p>So, if you need a package that’s part of your OS that didn’t get installed at install time, you can install them later with <code>apt</code> or <code>dnf</code>. And, some packages on your computer may be written in Python.</p><p>The collection of software that makes up your OS (and which versions of the software) is chosen and tested by the OS bulders to work together well. But let’s say you want to install a Python package that isn’t part of the OS, or perhaps your project needs a version that’s different to that provided by the OS. Traditionally you could use <code>pip</code> to install different Python software into the OS’s main place for Python packages, typically <code>/usr/lib64/python3.12/site-packages</code> or similar, depending on your OS and main Python version.</p><p>The problem is that installing not-included-in-the-OS packages can mess up the software that’s there as part of the OS. Similarly, your project may need an updated version of a package, but this updated version is incompatible with the version your OS needs. Upgrading may break your OS!</p><p>In order to prevent this happening, when you install not-included-in-the-OS (or updated) Python code, you’re now strongly encouraged to install it into a “virtual environment”, rather than where the OS puts stuff. “Virtual environment” is just a directory somewhere (usually nestled in with your project files) where Python packages can be installed into. Then, when you “activate” that virtual environment and import something within your Python code, Python will look there first, and if it can’t find it there, then it’ll search the OS place.</p><p>This also means you no longer need to be root to install software (because it gets installed somewhere in your home directory), and you can delete this virtual env when you’re finished without compromising the OS.</p><p>Now, it is possible to get <code>pip</code> to install into where the OS puts its Python code, but really, just don’t. The move to virtual environments is a <em>good thing</em>! Let me give a practical demonstration: I like writing web apps in Django, which is an application framework written in Python.</p><p>So I’m logged into my computer as “mjd”, and my home directory is <code>/home/mjd</code>:</p><pre><code>[mjd@xiaomao ~]$ pwd
+/home/mjd
+</code></pre><p>I’ll <code>cd</code> into where my web app is, then <code>cd</code> into my <code>pyproj</code> dir inside that:</p><pre><code>[mjd@xiaomao ~]$ cd git/afork.com/
+[mjd@xiaomao afork.com]$ ls
+pyproj  README.md
+[mjd@xiaomao afork.com]$ cd pyproj/
+[mjd@xiaomao pyproj]$ ls
+authuser  conf  db.sqlite3  guestbook  manage.py  requirements.txt  static
+</code></pre><p>Note there’s a requirements.txt file that says the python packages that need to be installed:</p><pre><code>[mjd@xiaomao pyproj]$ cat requirements.txt 
+Django==5.0.2
+django-dotenv==1.4.2
+dj_database_url==2.1.0
+pytz==2024.1
+# requests==2.31
+</code></pre><p>And also that Django is not currently installed:</p><pre><code>mjd@xiaomao pyproj]$ ./manage.py check
+ModuleNotFoundError: No module named &#39;django&#39;
+
+ImportError: Couldn&#39;t import Django. Are you sure it&#39;s installed and available on your PYTHONPATH environment variable? Did you forget to activate a virtual environment?
+</code></pre><p>So, if I type <code>python</code>, which Python do I get, and where does it load packages from?</p><pre><code>[mjd@xiaomao pyproj]$ type python
+python is /usr/bin/python
+[mjd@xiaomao pyproj]$ python -c &#39;import sys; print(sys.path)&#39;
+[&#39;&#39;, &#39;/usr/lib64/python311.zip&#39;, &#39;/usr/lib64/python3.11&#39;, &#39;/usr/lib64/python3.11/lib-dynload&#39;, &#39;/usr/local/lib/python3.11/site-packages&#39;, &#39;/usr/lib64/python3.11/site-packages&#39;, &#39;/usr/lib/python3.11/site-packages&#39;]
+</code></pre><p>Let’s create a virtual environment (or “venv” for short), which is stored in a directory called <code>env</code>, in the current directory:</p><pre><code>mjd@xiaomao pyproj]$ python -m venv env
+[mjd@xiaomao pyproj]$ ls -l
+total 164
+drwxr-xr-x. 4 mjd mjd   4096 Feb 20 13:59 authuser
+drwxr-xr-x. 3 mjd mjd   4096 Feb 27 13:43 conf
+-rw-r--r--. 1 mjd mjd 135168 Feb 20 14:57 db.sqlite3
+drwxr-xr-x. 5 mjd mjd   4096 Feb 27 13:51 env
+drwxr-xr-x. 5 mjd mjd   4096 Feb 23 18:35 guestbook
+-rwxr-xr-x. 1 mjd mjd    660 Feb 20 13:35 manage.py
+-rw-r--r--. 1 mjd mjd     88 Feb 20 13:35 requirements.txt
+drwxr-xr-x. 3 mjd mjd   4096 Feb 20 14:48 static
+</code></pre><p>Inside <code>env</code>, there’s a directory called <code>bin</code>, that has versions of <code>pip</code> and <code>python</code> that will load packages from this virtual environment:</p><pre><code>[mjd@xiaomao pyproj]$ ls env/bin
+activate      activate.fish  pip   pip3.11  python3
+activate.csh  Activate.ps1   pip3  python   python3.11
+</code></pre><p>In order to access this virtual environment, we have to “activate” it. This will alter our path so <code>python</code> picks up the Python that’s in the venv’s <code>bin</code> dir, and pip will pick up the <code>pip</code> that’s in the <code>bin</code> dir:</p><pre><code>[mjd@xiaomao pyproj]$ . env/bin/activate
+(env) [mjd@xiaomao pyproj]$
+</code></pre><p>Notice the <code>(env)</code> in our command-line prompt? That’s our cue that we’re running inside the virtual environment. So, let’s see which Python we get when we run <code>python</code>, and where it looks for packages:</p><pre><code>(env) [mjd@xiaomao pyproj]$ type python
+python is /home/mjd/git/afork.com/pyproj/env/bin/python
+(env) [mjd@xiaomao pyproj]$ python -c &#39;import sys; print(sys.path)&#39;
+[&#39;&#39;, &#39;/usr/lib64/python311.zip&#39;, &#39;/usr/lib64/python3.11&#39;, &#39;/usr/lib64/python3.11/lib-dynload&#39;, &#39;/home/mjd/git/afork.com/pyproj/env/lib64/python3.11/site-packages&#39;, &#39;/home/mjd/git/afork.com/pyproj/env/lib/python3.11/site-packages&#39;]
+</code></pre><p>That’s great, we can see that python will now look for packages in our venv. Now that our virtual env is activated, we can run <code>pip</code>, which will install into the venv:</p><pre><code>(env) [mjd@xiaomao pyproj]$ pip install -r requirements.txt 
+Collecting Django==5.0.2
+  Using cached Django-5.0.2-py3-none-any.whl (8.2 MB)
+...
+Successfully installed Django-5.0.2 asgiref-3.7.2 dj_database_url-2.1.0 django-dotenv-1.4.2 pytz-2024.1 sqlparse-0.4.4 typing-extensions-4.10.0
+(env) [mjd@xiaomao pyproj]$
+</code></pre><p>So what happened when we did the <code>pip</code>? Let’s have a look into where the venv <code>python</code> will look for packages:</p><pre><code>(env) [mjd@xiaomao pyproj]$ ls -l env/lib64/python3.11/site-packages/
+total 200
+drwxr-xr-x.  3 mjd mjd   4096 Feb 27 13:52 asgiref
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 asgiref-3.7.2.dist-info
+drwxr-xr-x.  3 mjd mjd   4096 Feb 27 13:51 _distutils_hack
+-rw-r--r--.  1 mjd mjd    151 Feb 27 13:51 distutils-precedence.pth
+drwxr-xr-x. 18 mjd mjd   4096 Feb 27 13:52 django
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 Django-5.0.2.dist-info
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 django_dotenv-1.4.2.dist-info
+drwxr-xr-x.  3 mjd mjd   4096 Feb 27 13:52 dj_database_url
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 dj_database_url-2.1.0.dist-info
+-rw-r--r--.  1 mjd mjd   3669 Feb 27 13:52 dotenv.py
+drwxr-xr-x.  5 mjd mjd   4096 Feb 27 13:51 pip
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:51 pip-22.3.1.dist-info
+drwxr-xr-x.  5 mjd mjd   4096 Feb 27 13:51 pkg_resources
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 __pycache__
+drwxr-xr-x.  4 mjd mjd   4096 Feb 27 13:52 pytz
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 pytz-2024.1.dist-info
+drwxr-xr-x.  8 mjd mjd   4096 Feb 27 13:51 setuptools
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:51 setuptools-65.5.1.dist-info
+drwxr-xr-x.  5 mjd mjd   4096 Feb 27 13:52 sqlparse
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 sqlparse-0.4.4.dist-info
+drwxr-xr-x.  2 mjd mjd   4096 Feb 27 13:52 typing_extensions-4.10.0.dist-info
+-rw-r--r--.  1 mjd mjd 117599 Feb 27 13:52 typing_extensions.py
+</code></pre><p>Knowing that these packages are now installed in the venv, we can now run our Django program without error:</p><pre><code>(env) [mjd@xiaomao pyproj]$ ./manage.py check
+System check identified no issues (0 silenced).
+</code></pre><p>So let’s try it out. We’ll run Django’s testing webserver on port 8000, but before that, some trickery: Let’s start a job that will sleep for 10 seconds, then use <code>curl</code> to request the top level page from the site and show the first 4 lines of the HTML. (The page doesn’t exist and will 404, but that’s ok). The <code>()</code> bundles the sleep and curl, and the <code>&amp;</code> runs the job in the background:</p><pre><code>(env) [mjd@xiaomao pyproj]$ (sleep 10; curl -s &#39;http://localhost:8000/&#39; | head -4) &amp;
+</code></pre><p>And we can see that job is running in the background:</p><pre><code>(env) [mjd@xiaomao pyproj]$ jobs
+[1]+  Running                 ( sleep 10; curl -s &#39;http://localhost:8000/&#39; | head -4 ) &amp;
+</code></pre><p>Now, while the sleep is happening, we can start the web server, which is dutifully listening on port 8000:</p><pre><code>(env) [mjd@xiaomao pyproj]$ ./manage.py runserver
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+</code></pre><p>Ten seconds after we started the curl job, the request is made (and 404s, as expected), and we can see the first four lines of the returned HTML:</p><pre><code>Not Found: /
+[27/Feb/2024 13:55:34] &quot;GET / HTTP/1.1&quot; 404 2279
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+</code></pre><p>Finally, I can press <em>Ctrl-C</em> to break out of the web server, and deactivate the virtual environment:</p><pre><code>^C
+(env) [mjd@xiaomao pyproj]$ 
+(env) [mjd@xiaomao pyproj]$ deactivate 
+[mjd@xiaomao pyproj]$ 
+</code></pre><p>(Deactivating is optional)</p><p>By using a virtual environment, we’ve been able to install Python software without interfering with (or destabilising) the Python software that comes with the OS. We also didn’t need to log in as root to do this, and it’s valid and useful to have several virtual environments, one per project, which may contain the same packages, but where the versions of the packages is different.</p></div><footer class="content__footer"><div class="entry-wrapper"><p class="content__updated">This article was updated on October 6, 2025</p><div class="content__actions"><div class="content__share"><button class="btn--icon content__share-button js-content__share-button"><svg width="20" height="20" aria-hidden="true"><use xlink:href="https://capnkernel.github.io/assets/svg/svg-map.svg#share"></use></svg> <span>Share It</span></button><div class="content__share-popup js-content__share-popup"></div></div></div><div class="content__bio bio"><div><h3 class="h4 bio__name"><a href="https://capnkernel.github.io/authors/mitch/" rel="author">Mitch</a></h3></div></div></div><nav class="content__nav"><div class="wrapper"><div class="content__nav-inner"><div class="content__nav-prev"><a href="https://capnkernel.github.io/right-angle-mounting-of-fuses-a-small-adaptor-board.html" class="content__nav-link" rel="prev"><div><span>Previous</span> Right angle mounting of fuses: A small adaptor board.</div></a></div><div class="content__nav-next"><a href="https://capnkernel.github.io/chatgpt-is-almost-useful-for-whole-picture-coding.html" class="content__nav-link" rel="next"><div><span>Next</span> ChatGPT is almost useful for whole-picture coding</div></a></div></div></div></nav></footer></article><div class="content__related related"><div class="wrapper"><h2 class="h4 related__title">You should also read:</h2><article class="feed__item feed__item--centered"><div class="feed__content"><header><div class="feed__meta"><a href="https://capnkernel.github.io/authors/mitch/" class="feed__author">Mitch</a> <time datetime="2023-01-06T12:00" class="feed__date">January 6, 2023</time></div><h3 class="feed__title"><a href="https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html">Planter boxes using corflute and milk crates</a></h3></header><p>(Note this is from 2023; we’ve moved since then) There’s no soil where we live, just a concrete space. Everything we plant has to be in a container of some sort, and our soil (3m² of it) was shipped in on a truck: When exploring&hellip;</p><a href="https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html" class="readmore feed__readmore">Continue reading...</a></div></article></div></div></main><footer class="footer footer--glued"><div class="wrapper"><div class="footer__copyright">Powered by Publii</div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://capnkernel.github.io/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://capnkernel.github.io/assets/js/scripts.min.js?v=ffcbea6c02c8178d10092962b235a5b0"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script></body></html>

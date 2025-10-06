@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-06T13:11:36+11:00</updated>
+    <updated>2025-10-06T13:25:51+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -330,11 +330,7 @@ git pull
 </code></pre>
 <p>Then do the steps in the <strong>Download front end react app files</strong> section above.  Then:</p><pre><code>sudo touch /etc/uwsgi-emperor/vassals/inventree.ini
 </code></pre>
-<p>You’ll need to reload any web pages you have open.</p><h2 id="todo">TODO</h2>
-<ul>
-<li>Backups - need to check whether the InvenTree worker is kicking off backups.<br><a href="https://docs.inventree.org/en/latest/start/backup/#daily-backup">https://docs.inventree.org/en/latest/start/backup/#daily-backup</a></li>
-</ul>
-
+<p>You’ll need to reload any web pages you have open.</p>
             ]]>
         </content>
     </entry>

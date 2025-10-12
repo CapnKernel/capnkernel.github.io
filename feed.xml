@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-06T23:06:19+11:00</updated>
+    <updated>2025-10-12T11:53:07+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -303,12 +303,14 @@ itree.example.com {
 </code></pre>
 <p>Add <code>-f</code> to tail the log.</p><h2 id="backups">Backups</h2>
 <p>Backups of the database and of the media files are done to <code>~/data/backup</code> once a day by the worker.  Database backups end in <code>.dump.gz</code>, and media backups end in <code>.tar.gz</code>.  A cron job, run by the <code>uwsgi</code> user, sends the backups offsite every four hours using <code>rsync</code>.  The backup filenames contain the hostname rather than the virtual host name due to <a href="https://github.com/inventree/InvenTree/issues/10488">limitations in InvenTree</a>.</p><h2 id="upgrading">Upgrading</h2>
-<pre><code>cd ~/src
+<p>(If you’re just coming here for the upgrade, you’ll need to log in as <code>inventree</code>, then activate the virtual environment):</p><pre><code>source ~/env/bin/activate
+</code></pre>
+<p>Then:</p><pre><code>cd ~/src
 git pull
 </code></pre>
 <p>Then do the steps in the <strong>Download front end react app files</strong> section above.  Then:</p><pre><code>sudo touch /etc/uwsgi-emperor/vassals/inventree.ini
 </code></pre>
-<p>You’ll need to reload any web pages you have open.</p>
+<p>You’ll need to reload any Inventree web pages you have open.</p>
             ]]>
         </content>
     </entry>

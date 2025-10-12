@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-12T11:53:07+11:00</updated>
+    <updated>2025-10-13T09:47:58+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -343,7 +343,7 @@ git pull
 <p>I'm going to suggest that LLMs are a form of wrecking agent, designed to prevent those who would trust it from getting any successful work done by emitting ostensibly useful but actually flawed information.</p>
 <p>Who would be behind such a thing?  I'm not sure there was any particular evil overlord behind Soviet wrecking; it was just a convenient bogeyman on which to blame failure to meet utopian standards.</p>
 <p>Or perhaps communists, or aliens, are behind it.  Communist aliens even!  I don't know.  All I know is I still don't have completely working code that meets my requirements, and I'm pretty sick of wasting time trying to get ChatGPT to provide it.</p>
-<p>Update: I've recently been using <a href="https://chat.deepseek.com/">DeepSeek</a>.  It's _miles_ better.  It's rarely wrong, and it does a much better job of understanding the whole of the problem, as if its _attention span_ was better.  DeepSeek is actually useful.  Oh, and the chat mode is free, so you can talk and talk, and it won't suddenly say "well that's it for today, unless you pay me money".  </p>
+<p>Update: I've recently been using <a href="https://chat.deepseek.com/">DeepSeek</a>.  It's <em>miles</em> better.  It's rarely wrong, and it does a much better job of understanding the whole of the problem, as if its <em>attention span</em> was better.  DeepSeek is actually useful.  Oh, and the chat mode is free, so you can talk and talk, and it won't suddenly say "well that's it for today, unless you pay me money".  </p>
             ]]>
         </content>
     </entry>

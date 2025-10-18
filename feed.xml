@@ -3,12 +3,34 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-13T09:47:58+11:00</updated>
+    <updated>2025-10-18T11:52:42+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
     <id>https://capnkernel.github.io</id>
 
+    <entry>
+        <title>What&#x27;s wrong with React?</title>
+        <author>
+            <name>Mitch</name>
+        </author>
+        <link href="https://capnkernel.github.io/whats-wrong-with-react.html"/>
+        <id>https://capnkernel.github.io/whats-wrong-with-react.html</id>
+
+        <updated>2025-10-18T11:00:32+11:00</updated>
+            <summary>
+                <![CDATA[
+                    One way to write web-based client-server software is to run client software in the browser, which talks to back-end software via a RESTful interface: The client sends in HTTP form data, and the server responds with JSON. React is super-popular for writing the front-end part&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>One way to write web-based client-server software is to run client software in the browser, which talks to back-end software via a RESTful interface: The client sends in HTTP form data, and the server responds with JSON.  React is super-popular for writing the front-end part of this, but I’ve always been so grossed out by what’s actually required to write stuff in React that I refuse to touch it.  Yet React’s become a sacred cow that can’t be questioned.  Well I’m here to question it.</p><p>First, the idea of the Virtual DOM. We’ve been sold on the necessity of continually running a reconciliation process between it and the reality of the browser, and we pat ourselves on the back about how cool this diffing algorithm is, while we lose sight of how fundamentally inefficient it is to build the whole UI tree in memory from scratch on every state change, only to throw most of it away. This process is so inefficient that we’ve had to invent the “Fiber” architecture to stop the browser’s main thread
+from choking. Good job.</p><p>JSX and its inline HTML requires a compile step, which means the extra complexity of maintaining a toolchain and doing builds. Who hasn’t lost days tracking down problems that wouldn’t have occurred if there were no build step?</p><p>One thing Django has over (traditional) PHP is the separation of logic over presentation. With JSX, logic and presentation are mixed in together, making it harder to test and reason about both. The HTML in React components is inevitably tied to the HTML on the web pages that’ll use it because of things like styling and element ids, so while modularisation is possible, reuse isn’t that practical.</p><p>The Hooks API, which was supposed to make stateful logic simpler, is a minefield of unintuitive rules and implicit dependencies. The infamous “stale closure” problem is not a rare edge case but a central, recurring theme that you will get. Having a function that captures a snapshot of state creates a temporal dissonance where your code is never quite running in the present. Managing these ephemeral, almost quantum-mechanical state variables requires a linter with a rulebook of its own, a testament to an API so fragile it cannot be trusted to be used correctly by default. What if we didn’t have to capture this state in the first place?</p><p>React’s minimalism is a mirage. By intentionally washing its hands of core application needs like routing, data fetching, and state management, it’s spawned a sprawling, unstable ecosystem of third-party libraries, each with its own philosophy, lifecycle, and inevitable deprecation schedule, to fill the gaps (give me Django’s batteries-included approach). A React project in 2025 is less a cohesive application and more a delicate
+tapestry of <code>useEffect</code>, <code>useState</code>, Context, Redux, TanStack Query, and whatever router we’re using this week , all held together by the hope that their intricate interactions don’t produce an inscrutable bug. The problem React tried to solve was writing scalable UIs, but delivering the solution the React way requires a toolchain so complex and brittle that the original problem of the DOM feels simple by comparison. It is a <a href="https://eev.ee/blog/2012/04/09/php-a-fractal-of-bad-design/">fractal of bad design</a>: from the confusing rules of Hooks, to the wasteful reconciliation process, up to the chaotic ecosystem it has fostered, every level reveals a new layer of accidental complexity.</p><p>In terms of a fractal assembly of bad ideas now too deeply embedded in the ‘net to be fixed, see also JavaScript. Don’t get me started, really. Just because you can doesn’t mean it’s a good idea. For example, the whole “promise” thing and how work is scheduled in JS is someone’s Ph.D thesis let loose that shouldn’t have seen the light of day, because it produces code that is so crufted up with the promise crap, that it drowns out the code you’re writing to solve a problem. And that’s just one of the problems it has.</p><p>Python’s as lovely as it is because it had the good taste to be crafted by a first-rate computer scientist, not software engineers. I’ve heard the same of go and rust; I look forward to learning more about them.</p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Inventree 1.0.x install</title>
         <author>
@@ -302,7 +324,7 @@ itree.example.com {
 <p>The caddy log can be viewed with:</p><pre><code>sudo journalctl -u caddy
 </code></pre>
 <p>Add <code>-f</code> to tail the log.</p><h2 id="backups">Backups</h2>
-<p>Backups of the database and of the media files are done to <code>~/data/backup</code> once a day by the worker.  Database backups end in <code>.dump.gz</code>, and media backups end in <code>.tar.gz</code>.  A cron job, run by the <code>uwsgi</code> user, sends the backups offsite every four hours using <code>rsync</code>.  The backup filenames contain the hostname rather than the virtual host name due to <a href="https://github.com/inventree/InvenTree/issues/10488">limitations in InvenTree</a>.</p><h2 id="upgrading">Upgrading</h2>
+<p>Backups of the database and of the media files are done to <code>~/data/backup</code> once a day by the worker.  Database backups end in <code>.dump.gz</code>, and media backups end in <code>.tar.gz</code>.  A cron job, run by the <code>uwsgi</code> user, sends the backups offsite every four hours using <code>rsync</code>.  The backup filenames contain the hostname rather than the virtual host name due to <a href="https://github.com/inventree/InvenTree/issues/10488">limitations in InvenTree</a> that will be fixed in InvenTree 1.1.</p><h2 id="upgrading">Upgrading</h2>
 <p>(If you’re just coming here for the upgrade, you’ll need to log in as <code>inventree</code>, then activate the virtual environment):</p><pre><code>source ~/env/bin/activate
 </code></pre>
 <p>Then:</p><pre><code>cd ~/src

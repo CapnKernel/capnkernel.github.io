@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2025-10-18T11:52:42+11:00</updated>
+    <updated>2025-12-18T15:58:18+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -42,16 +42,16 @@ tapestry of <code>useEffect</code>, <code>useState</code>, Context, Redux, TanSt
         <updated>2025-09-23T13:53:30+10:00</updated>
             <summary>
                 <![CDATA[
-                    Bare metal Installation instructions here: https://docs.inventree.org/en/latest/start/install/ Here’s what I did different: Do the apt-get install of required system packages For Weasyprint: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html apt install pango1.0-tools The rest of what Weasyprint needs will be auto-installed into the venv later. Create user with uid 1118 (to not&hellip;
+                    Bare metal Installation instructions here: https://docs.inventree.org/en/latest/start/install/ Here’s what I did different: Do the apt-get install of required system packages For Weasyprint: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html apt install pango1.0-tools The rest of what Weasyprint needs will be auto-installed into the venv later. Create user with uid 1119 (to not&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
                 <p>Bare metal Installation instructions here:</p><p>  <a href="https://docs.inventree.org/en/latest/start/install/">https://docs.inventree.org/en/latest/start/install/</a></p><p>Here’s what I did different:</p><h2 id="install-system-packages">Install System Packages</h2>
 <p>Do the <code>apt-get install</code> of required system packages<br>For Weasyprint:<br><a href="https://doc.courtbouillon.org/weasyprint/stable/first_steps.html">https://doc.courtbouillon.org/weasyprint/stable/first_steps.html</a><br><code>apt install pango1.0-tools</code><br>The rest of what Weasyprint needs will be auto-installed into the venv later.</p><h2 id="create-inventree-user">Create InvenTree User</h2>
-<p>Create user with uid 1118 (to not clash with other uids), which is a member of <code>www-data</code> group.</p><p>Instead of:</p><pre><code>useradd -m -d /home/inventree -s /bin/bash inventree
+<p>Create user with uid 1119 (to not clash with other uids), which is a member of <code>www-data</code> group.</p><p>Instead of:</p><pre><code>useradd -m -d /home/inventree -s /bin/bash inventree
 </code></pre>
-<p>… run:</p><pre><code>useradd -m -U -u 1118 -G www-data -s /bin/bash inventree
+<p>… run:</p><pre><code>useradd -m -U -u 1119 -G www-data -s /bin/bash inventree
 chown inventree:www-data /home/inventree
 chmod o-rwx /home/inventree
 </code></pre>

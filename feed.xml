@@ -3,7 +3,7 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2026-03-10T16:06:56+11:00</updated>
+    <updated>2026-03-10T16:17:57+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
@@ -76,7 +76,7 @@ YYYYMM    TMax  TMin   Rain  Evap   Rad    VP
   }
 }
 </code></pre>
-<p>It generates a URL like the clickable example above.  And here’s a runnable test function, with the expected result:</p><pre><code>function test_SILO_AVG_RAINFALL_GETURL() {
+<p>It generates a URL like the clickable example above.  And here’s a runnable test function, with the expected result:</p><pre><code class="language-js">function test_SILO_AVG_RAINFALL_GETURL() {
   const latLongStr = &quot;-37.5152576, 145.1227105&quot;; // Whittlesea Library
   const ret = SILO_AVG_RAINFALL_GETURL(latLongStr);
 
@@ -88,7 +88,7 @@ YYYYMM    TMax  TMin   Rain  Evap   Rad    VP
   }
 }
 </code></pre>
-<p>Once we have the monthly rainfall for the past ten years, we can add up the months in each year for a yearly total.  (This function handles missing months, although I haven’t found any missing so far)</p><pre><code>/**
+<p>Once we have the monthly rainfall for the past ten years, we can add up the months in each year for a yearly total.  (This function handles missing months, although I haven’t found any missing so far)</p><pre><code class="language-js">/**
  * Calculate the average annual rainfall for the past 10 years from monthly data from the SILO API.
  * 
  * @param {string} latLongStr String in format &quot;latitude, longitude&quot; (e.g. &quot;-33.8688, 151.2093&quot;)
@@ -163,7 +163,7 @@ function SILO_AVG_RAINFALL(latLongStr) {
   }
 }
 </code></pre>
-<p>And we can test it like this:</p><pre><code>function test_SILO_AVG_RAINFALL() {
+<p>And we can test it like this:</p><pre><code class="language-js">function test_SILO_AVG_RAINFALL() {
   const latLongStr = &quot;-37.5152576, 145.1227105&quot;; // Whittlesea Library
   const ret = SILO_AVG_RAINFALL(latLongStr);
   const exp = 698.4;

@@ -5,6 +5,58 @@
 <loc>https://capnkernel.github.io/</loc>
 </url>
 <url>
+<loc>https://capnkernel.github.io/adding-smarts-to-google-sheets.html</loc>
+<lastmod>2026-03-10T14:04:53+11:00</lastmod>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/place-names.png</image:loc>
+<image:title><![CDATA[Place names]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/maps-lat-long.png</image:loc>
+<image:title><![CDATA[Lat/long inside Maps]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/open-app-script.png</image:loc>
+<image:title><![CDATA[Opening apps script]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/in-app-script.png</image:loc>
+<image:title><![CDATA[In the App Script environment]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/hello-and-hello-test.png</image:loc>
+<image:title><![CDATA[Function and tester]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/testing-hello.png</image:loc>
+<image:title><![CDATA[Testing `HELLO`]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/calling-hello.png</image:loc>
+<image:title><![CDATA[Calling `HELLO`]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/hello-result.png</image:loc>
+<image:title><![CDATA[Result of calling `HELLO`]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/geocode-result.png</image:loc>
+<image:title><![CDATA[Calling `GEOCODE` from App Script]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/sheet-geocode-formula.png</image:loc>
+<image:title><![CDATA[Calling `GEOCODE` from the sheet]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/sheet-geocode-result.png</image:loc>
+<image:title><![CDATA[Result of calling `GEOCODE` from the sheet]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/23/sheet-geocode-extended.png</image:loc>
+<image:title><![CDATA[`GEOCODE` calls now made from many cells]]></image:title>
+</image:image>
+</url>
+<url>
 <loc>https://capnkernel.github.io/chatgpt-is-almost-useful-for-whole-picture-coding.html</loc>
 <lastmod>2025-10-13T09:47:58+11:00</lastmod>
 </url>

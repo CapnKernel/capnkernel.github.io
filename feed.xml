@@ -3,12 +3,181 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2026-03-10T16:04:46+11:00</updated>
+    <updated>2026-03-10T16:06:56+11:00</updated>
     <author>
         <name>Mitch</name>
     </author>
     <id>https://capnkernel.github.io</id>
 
+    <entry>
+        <title>Importing internet data into Google Sheets</title>
+        <author>
+            <name>Mitch</name>
+        </author>
+        <link href="https://capnkernel.github.io/importing-internet-data-into-google-sheets.html"/>
+        <id>https://capnkernel.github.io/importing-internet-data-into-google-sheets.html</id>
+
+        <updated>2026-03-10T14:03:14+11:00</updated>
+            <summary>
+                <![CDATA[
+                    So, I’m looking to buy some land for a farm. Something with a house where I can be largely self-sufficient. I want to grow food and pasture and trees, and have a cow and some sheep, so one important criterion is rainfall. I have a&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p>So, I’m looking to buy some land for a farm.  Something with a house where I can be largely self-sufficient.  I want to grow food and pasture and trees, and have a cow and some sheep, so one important criterion is rainfall.  </p><p>I have a spreadsheet for tracking and rating the properties I’m interested in.  I’d like the spreadsheet to automatically show me the average annual rainfall over the past ten years, for each property.</p><p>I can get Australia-wide historical information from <a href="https://www.longpaddock.qld.gov.au/silo/">SILO</a>:</p><figure class="post__image"><img src="https://capnkernel.github.io/media/posts/28/silo.png" alt="SILO" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/28/responsive/silo-xs.png 640w ,https://capnkernel.github.io/media/posts/28/responsive/silo-sm.png 768w ,https://capnkernel.github.io/media/posts/28/responsive/silo-md.png 1024w ,https://capnkernel.github.io/media/posts/28/responsive/silo-lg.png 1366w ,https://capnkernel.github.io/media/posts/28/responsive/silo-xl.png 1600w ,https://capnkernel.github.io/media/posts/28/responsive/silo-2xl.png 1920w"></figure><p>SILO has an interactive mode where you can zoom to a place and ask for rainfall (here’s Whittlesea, which we were looking at in the previous article):</p><figure class="post__image"><img loading="lazy" src="https://capnkernel.github.io/media/posts/28/silo-interactive-whittlesea.png" alt="Whittlesea rainfall" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/28/responsive/silo-interactive-whittlesea-xs.png 640w ,https://capnkernel.github.io/media/posts/28/responsive/silo-interactive-whittlesea-sm.png 768w ,https://capnkernel.github.io/media/posts/28/responsive/silo-interactive-whittlesea-md.png 1024w ,https://capnkernel.github.io/media/posts/28/responsive/silo-interactive-whittlesea-lg.png 1366w ,https://capnkernel.github.io/media/posts/28/responsive/silo-interactive-whittlesea-xl.png 1600w ,https://capnkernel.github.io/media/posts/28/responsive/silo-interactive-whittlesea-2xl.png 1920w"></figure><p>You can also retrieve rainfall from SILO using a web request.  You need to supply the start and end dates, the lat and long, the format, and an email address (which can be anything). </p><p><a href="https://www.longpaddock.qld.gov.au/cgi-bin/silo/DataDrillDataset.php?start=20160101&finish=20251231&lat=-37.5152576&lon=145.1227105&format=monthly&username=test%40your-domain.com">Clickable example</a></p><p>Example data (partial):</p><pre><code>Yr.Mth     Avg   Avg    Tot   Tot   Avg   Avg
+YYYYMM    TMax  TMin   Rain  Evap   Rad    VP
+()        (oC)  (oC)   (mm)  (mm) (MJ/m2) (hPa)
+20160100  27.4  14.7   68.1 177.0  21.2  14.9
+20160200  27.2  14.1   14.6 168.9  21.7  14.4
+20160300  26.0  13.9   36.0 136.5  14.3  15.1
+</code></pre>
+<p>The fourth column, total rain for the month in mm, is what we want.</p><p>To generate the URL, here’s an App Script function:</p><pre><code class="language-js">function SILO_AVG_RAINFALL_GETURL(latLongStr) {
+  var YOUR_EMAIL = &quot;test@your-domain.com&quot;;
+  
+  try {
+    // Parse and Validate Latitude/Longitude
+    if (!latLongStr) throw new Error(&quot;No lat/long provided. Format: &#39;lat, long&#39;&quot;);
+    
+    var parts = latLongStr.toString().split(&#39;,&#39;);
+    if (parts.length &lt; 2) throw new Error(&quot;Invalid format. Use &#39;latitude, longitude&#39;&quot;);
+    
+    var lat = parseFloat(parts[0].trim());
+    var lon = parseFloat(parts[1].trim());
+    if (isNaN(lat) || isNaN(lon)) throw new Error(&quot;Could not parse latitude/longitude&quot;);
+    if (lat &lt; -44 || lat &gt; -10 || lon &lt; 112 || lon &gt; 154) {
+      throw new Error(&quot;Coordinates outside Australian land range&quot;);
+    }
+
+    // Calculate Date Range (Past 10 Full Calendar Years) ---
+    var today = new Date();
+    var currentYear = today.getFullYear();
+    var endDate = (currentYear - 1) + &quot;1231&quot;;      // Dec 31 last year, format yyyymmdd
+    var startDate = (currentYear - 10) + &quot;0101&quot;;   // Jan 1 10 years ago
+
+    // Construct URL for SILO data file
+    var params = {
+      &#39;start&#39;: startDate,
+      &#39;finish&#39;: endDate,
+      &#39;lat&#39;: lat,
+      &#39;lon&#39;: lon,
+      &#39;format&#39;: &#39;monthly&#39;,
+      &#39;username&#39;: YOUR_EMAIL
+    };
+    
+    var queryString = Object.keys(params)
+      .map(key =&gt; encodeURIComponent(key) + &#39;=&#39; + encodeURIComponent(params[key]))
+      .join(&#39;&amp;&#39;);
+    
+    let url = &#39;https://www.longpaddock.qld.gov.au/cgi-bin/silo/DataDrillDataset.php?&#39; + queryString;
+    return url;
+  } catch (e) {
+    return &quot;Error: &quot; + e.message;
+  }
+}
+</code></pre>
+<p>It generates a URL like the clickable example above.  And here’s a runnable test function, with the expected result:</p><pre><code>function test_SILO_AVG_RAINFALL_GETURL() {
+  const latLongStr = &quot;-37.5152576, 145.1227105&quot;; // Whittlesea Library
+  const ret = SILO_AVG_RAINFALL_GETURL(latLongStr);
+
+  const exp = &quot;https://www.longpaddock.qld.gov.au/cgi-bin/silo/DataDrillDataset.php?start=20160101&amp;finish=20251231&amp;lat=-37.5152576&amp;lon=145.1227105&amp;format=monthly&amp;username=test%40your-domain.com&quot;;
+  if (JSON.stringify(ret) == JSON.stringify(exp)) {
+    console.info(&#39;passed&#39;);
+  } else {
+    console.error(`Failed: ret=${JSON.stringify(ret)} exp=${JSON.stringify(exp)}`);
+  }
+}
+</code></pre>
+<p>Once we have the monthly rainfall for the past ten years, we can add up the months in each year for a yearly total.  (This function handles missing months, although I haven’t found any missing so far)</p><pre><code>/**
+ * Calculate the average annual rainfall for the past 10 years from monthly data from the SILO API.
+ * 
+ * @param {string} latLongStr String in format &quot;latitude, longitude&quot; (e.g. &quot;-33.8688, 151.2093&quot;)
+ * @return {number} Average annual rainfall (mm) for the past 10 full calendar years
+ */
+function SILO_AVG_RAINFALL(latLongStr) {
+  try {
+    let url = SILO_AVG_RAINFALL_GETURL(latLongStr);
+
+    const options = { muteHttpExceptions: true };
+    const response = UrlFetchApp.fetch(url, options);
+    var lines = response.getContentText().split(&#39;\n&#39;);
+    
+    // Find the header line that starts with &quot;Yr.Mth&quot;
+    var dataStartIndex = -1;
+    for (var i = 0; i &lt; lines.length; i++) {
+      let line = lines[i].trim();
+      if (line.startsWith(&#39;Yr.Mth&#39;)) {
+        dataStartIndex = i + 3; // Data starts 3 lines after this header
+        break;
+      }
+    }
+    
+    if (dataStartIndex === -1) throw new Error(&quot;Could not find data header&quot;);
+    
+    // Aggregate MONTHLY Rainfall by Year
+    var yearlyRain = {};
+    var validMonths = 0;
+    
+    for (var j = dataStartIndex; j &lt; lines.length; j++) {
+      var line = lines[j].trim();
+      if (line === &quot;&quot;) continue;
+      
+      // Split on whitespace (space-delimited)
+      var values = line.split(/\s+/);
+      if (values.length &lt; 5) continue;
+      
+      var yearMonth = values[0]; // Format: YYYYMM00
+      var rainString = values[3]; // Rain is the 4th column (index 3)
+      
+      if (yearMonth.length &gt;= 4) {
+        var year = yearMonth.substring(0, 4);
+        var rainValue = parseFloat(rainString);
+        
+        if (!isNaN(rainValue) &amp;&amp; rainValue &gt;= 0) { // Valid rainfall
+          if (!yearlyRain[year]) yearlyRain[year] = 0;
+          yearlyRain[year] += rainValue;
+          validMonths++;
+        }
+      }
+    }
+
+    // Calculate Average Annual Rainfall
+    var totalRainfall = 0;
+    var validYearCount = 0;
+    for (var year in yearlyRain) {
+      if (yearlyRain.hasOwnProperty(year) &amp;&amp; yearlyRain[year] &gt; 0) {
+        totalRainfall += yearlyRain[year];
+        validYearCount++;
+      }
+    }
+    
+    // Validate we have enough data (at least 80% of expected months)
+    var expectedMonths = validYearCount * 12;
+    if (validMonths &lt; expectedMonths * 0.8) {
+      throw new Error(&quot;Insufficient data (&quot; + validMonths + &quot;/&quot; + expectedMonths + &quot; months)&quot;);
+    }
+    
+    return Math.round((totalRainfall / validYearCount) * 10) / 10;
+  } catch (e) {
+    return &quot;Error: &quot; + e.message;
+  }
+}
+</code></pre>
+<p>And we can test it like this:</p><pre><code>function test_SILO_AVG_RAINFALL() {
+  const latLongStr = &quot;-37.5152576, 145.1227105&quot;; // Whittlesea Library
+  const ret = SILO_AVG_RAINFALL(latLongStr);
+  const exp = 698.4;
+  if (JSON.stringify(ret) == JSON.stringify(exp)) {
+    console.info(&#39;passed, ret=&#39; + ret);
+  } else {
+    console.error(`Failed: ret=${JSON.stringify(ret)} exp=${JSON.stringify(exp)}`);
+  }
+}
+</code></pre>
+<p>Running it for Whittlesea Library will look like this, with a result of about 700mm of rain per year:</p><figure class="post__image"><img src="https://capnkernel.github.io/media/posts/28/silo-result.png" alt="Running SILO test" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/28/responsive/silo-result-xs.png 640w ,https://capnkernel.github.io/media/posts/28/responsive/silo-result-sm.png 768w ,https://capnkernel.github.io/media/posts/28/responsive/silo-result-md.png 1024w ,https://capnkernel.github.io/media/posts/28/responsive/silo-result-lg.png 1366w ,https://capnkernel.github.io/media/posts/28/responsive/silo-result-xl.png 1600w ,https://capnkernel.github.io/media/posts/28/responsive/silo-result-2xl.png 1920w"></figure><p>Now we can call this function from our spreadsheet:</p><figure class="post__image"><img loading="lazy" src="https://capnkernel.github.io/media/posts/28/silo-in-sheet-1.png" alt="Calling rainfall function from sheet" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-1-xs.png 640w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-1-sm.png 768w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-1-md.png 1024w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-1-lg.png 1366w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-1-xl.png 1600w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-1-2xl.png 1920w"></figure><p>And extend it to all rows:</p><figure class="post__image"><img loading="lazy" src="https://capnkernel.github.io/media/posts/28/silo-in-sheet-2.png" alt="Rainfall for all rows" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-2-xs.png 640w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-2-sm.png 768w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-2-md.png 1024w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-2-lg.png 1366w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-2-xl.png 1600w ,https://capnkernel.github.io/media/posts/28/responsive/silo-in-sheet-2-2xl.png 1920w"></figure>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Adding smarts to Google Sheets</title>
         <author>

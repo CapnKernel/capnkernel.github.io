@@ -5,6 +5,26 @@
 <loc>https://capnkernel.github.io/</loc>
 </url>
 <url>
+<loc>https://capnkernel.github.io/a-cheap-differential-probe.html</loc>
+<lastmod>2026-05-25T15:09:35+10:00</lastmod>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/30/elesoft.jpg</image:loc>
+<image:title><![CDATA[Measuring the mains with an oscilloscope is dangerous!]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/30/eleprep.jpg</image:loc>
+<image:title><![CDATA[Cheap differential probe for oscilloscopes]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/30/pcb-top.png</image:loc>
+<image:title><![CDATA[Top side of board]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://capnkernel.github.io/media/posts/30/pcb-bottom.png</image:loc>
+<image:title><![CDATA[Bottom side of board]]></image:title>
+</image:image>
+</url>
+<url>
 <loc>https://capnkernel.github.io/adding-smarts-to-google-sheets.html</loc>
 <lastmod>2026-03-10T16:39:18+11:00</lastmod>
 <image:image>

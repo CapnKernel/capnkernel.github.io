@@ -3,12 +3,35 @@
     <title>Mitch&#x27;s Notes</title>
     <link href="https://capnkernel.github.io/feed.xml" rel="self" />
     <link href="https://capnkernel.github.io" />
-    <updated>2026-03-10T16:39:18+11:00</updated>
+    <updated>2026-05-25T15:09:35+10:00</updated>
     <author>
         <name>Mitch</name>
     </author>
     <id>https://capnkernel.github.io</id>
 
+    <entry>
+        <title>A cheap differential probe</title>
+        <author>
+            <name>Mitch</name>
+        </author>
+        <link href="https://capnkernel.github.io/a-cheap-differential-probe.html"/>
+        <id>https://capnkernel.github.io/a-cheap-differential-probe.html</id>
+
+        <updated>2026-05-25T13:27:43+10:00</updated>
+            <summary type="html">
+                <![CDATA[
+                    Here’s a super affordable differential probe I’m making for high voltage circuits. If you’re reading this, you probably know what a differential probe is, and why you want one, but just in case you don’t: Basically, if you’re working on a high voltage / mains&hellip;
+                ]]>
+            </summary>
+        <content type="html">
+            <![CDATA[
+                <p><strong>Here’s a super affordable differential probe I’m making for high voltage circuits.</strong></p><p>If you’re reading this, you probably know what a differential probe is, and why you want one, but just in case you don’t:</p><p>Basically, if you’re working on a high voltage / mains voltage circuit  (for example, a switch mode power supply) <em>and</em> you’re measuring signals with an oscilloscope, <em>and</em> your high voltage circuit is grounded (because it’s mains powered) <em>and</em> your oscilloscope is grounded (because it’s mains powered), then the moment you touch the ground lead of the scope probe to a high voltage part of your circuit, enormous amounts of current will flow through the ground lead, which will melt your scope probe, or burn out your nice scope, or both.  You’re likely to hear a sharp crack, there may be some molten metal, and you may even get a bonus fire.  Either way, you’ll be left thinking “WTF was that?”</p><p>The safety risks are covered pretty well in this YouTube video:
+<a href="https://www.youtube.com/watch?v=bpbNR6gd90k"><figure class="post__image"><img loading="lazy" src="https://capnkernel.github.io/media/posts/30/elesoft.jpg" alt="Measuring the mains with an oscilloscope is dangerous!" width="480" height="360" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/30/responsive/elesoft-xs.jpg 640w ,https://capnkernel.github.io/media/posts/30/responsive/elesoft-sm.jpg 768w ,https://capnkernel.github.io/media/posts/30/responsive/elesoft-md.jpg 1024w ,https://capnkernel.github.io/media/posts/30/responsive/elesoft-lg.jpg 1366w ,https://capnkernel.github.io/media/posts/30/responsive/elesoft-xl.jpg 1600w ,https://capnkernel.github.io/media/posts/30/responsive/elesoft-2xl.jpg 1920w"></figure></a></p><p>I want a differential probe so I can work on high voltage electronics.  But they’re quite expensive!  I found a few videos and websites showing how to make a DIY one.  I picked this one because (according to the video) it only needs about USD20 worth of parts.
+<a href="https://www.youtube.com/watch?v=-hP30AQCrqk"><figure class="post__image"><img src="https://capnkernel.github.io/media/posts/30/eleprep.jpg" alt="Cheap differential probe for oscilloscopes" width="480" height="360" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/30/responsive/eleprep-xs.jpg 640w ,https://capnkernel.github.io/media/posts/30/responsive/eleprep-sm.jpg 768w ,https://capnkernel.github.io/media/posts/30/responsive/eleprep-md.jpg 1024w ,https://capnkernel.github.io/media/posts/30/responsive/eleprep-lg.jpg 1366w ,https://capnkernel.github.io/media/posts/30/responsive/eleprep-xl.jpg 1600w ,https://capnkernel.github.io/media/posts/30/responsive/eleprep-2xl.jpg 1920w"></figure></a></p><p>According to the video, the probe can measure up to 800V, has 10 or 100x attenuation, and has 1MHz bandwidth with an impedance of 4MΩ || 8pF.  That’s more than enough for me.  The video has a full schematic walkthrough, and at the end the presenter shows the layout of a PCB he made.  So I took his design and converted it to a surface mount version.  </p><p>Here’s the top side:</p><figure class="post__image"><img loading="lazy" src="https://capnkernel.github.io/media/posts/30/pcb-top.png" alt="Top side of board" width="1080" height="525" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/30/responsive/pcb-top-xs.png 640w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-top-sm.png 768w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-top-md.png 1024w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-top-lg.png 1366w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-top-xl.png 1600w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-top-2xl.png 1920w"></figure><p>And the bottom side:
+<figure class="post__image"><img loading="lazy" src="https://capnkernel.github.io/media/posts/30/pcb-bottom.png" alt="Bottom side of board" width="986" height="511" sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://capnkernel.github.io/media/posts/30/responsive/pcb-bottom-xs.png 640w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-bottom-sm.png 768w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-bottom-md.png 1024w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-bottom-lg.png 1366w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-bottom-xl.png 1600w ,https://capnkernel.github.io/media/posts/30/responsive/pcb-bottom-2xl.png 1920w"></figure></p><p>I have designed the high voltage part of the board with components which are specifically rated for the job, and the PCB has slots under the high voltage components to increase the creep distance.</p><p>The repo with the KiCad 9 design files is here:</p><p>  <a href="https://github.com/CapnKernel/dprobe">https://github.com/CapnKernel/dprobe</a></p><p>To power the board, I’m using two rechargeable <a href="https://www.aliexpress.com/item/1005006016077820.html">14250</a> Li-ion batteries.  14250 batteries are like AA batteries, but half the length.  There’s a spot on the top of the board where I’m planning to fit a <a href="https://www.aliexpress.com/item/1005009894511082.html">2S battery charger module</a> which offers balanced charging from a USB Type-C connector.</p><p>There’s a slight catch with this design though: There’s no electrical isolation between the output to the oscilloscope and the Type-C connector.  If powered by a non-isolated charger, it may cause a short through the charger and scope.  It’s not a high voltage short (should be under 3V) but it’s still not great.  Therefore the probe shouldn’t be connected to the scope while it’s charging.</p><p>Another problem is the 4mm sockets on the board: These should accept 4mm plugs that have safety sleeves, like on multimeters, but I couldn’t find any.  Please tell me if you can find some on LCSC.</p><p>I’ve ordered PCBs and parts, and I’ll update this page when I have some results.</p>
+            ]]>
+        </content>
+    </entry>
     <entry>
         <title>Importing internet data into Google Sheets</title>
         <author>
@@ -18,7 +41,7 @@
         <id>https://capnkernel.github.io/importing-internet-data-into-google-sheets.html</id>
 
         <updated>2026-03-10T14:03:14+11:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     So, I’m looking to buy some land for a farm. Something with a house where I can be largely self-sufficient. I want to grow food and pasture and trees, and have a cow and some sheep, so one important criterion is rainfall. I have a&hellip;
                 ]]>
@@ -187,7 +210,7 @@ function SILO_AVG_RAINFALL(latLongStr) {
         <id>https://capnkernel.github.io/adding-smarts-to-google-sheets.html</id>
 
         <updated>2026-02-13T12:03:12+11:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     Did you know you can add your own functions to a Google Sheet spreadsheet? Let’s say you have a list of place names (which for this example just happen to be libraries): And let’s say you want to find the latitude and longitude for these&hellip;
                 ]]>
@@ -233,7 +256,7 @@ function GEOCODE(address) {
         <id>https://capnkernel.github.io/whats-wrong-with-react.html</id>
 
         <updated>2025-10-18T11:00:32+11:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     One way to write web-based client-server software is to run client software in the browser, which talks to back-end software via a RESTful interface: The client sends in HTTP form data, and the server responds with JSON. React is super-popular for writing the front-end part&hellip;
                 ]]>
@@ -255,7 +278,7 @@ tapestry of <code>useEffect</code>, <code>useState</code>, Context, Redux, TanSt
         <id>https://capnkernel.github.io/inventree-100-install.html</id>
 
         <updated>2025-09-23T13:53:30+10:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     Bare metal Installation instructions here: https://docs.inventree.org/en/latest/start/install/ Here’s what I did different: Do the apt-get install of required system packages For Weasyprint: https://doc.courtbouillon.org/weasyprint/stable/first_steps.html apt install pango1.0-tools The rest of what Weasyprint needs will be auto-installed into the venv later. Create user with uid 1119 (to not&hellip;
                 ]]>
@@ -560,7 +583,7 @@ git pull
         <id>https://capnkernel.github.io/chatgpt-is-almost-useful-for-whole-picture-coding.html</id>
 
         <updated>2025-09-01T14:49:18+10:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     Frickin' ChatGPT (even ChatGPT 5) is so damn frustrating. It's almost useful, to the point where it's useless, because it chews up so much time while you try to push it from nearly right to actually right. I've enlisted its help in doing some website&hellip;
                 ]]>
@@ -593,7 +616,7 @@ git pull
         <id>https://capnkernel.github.io/using-virtual-environments-to-separate-project-and-os-python-software.html</id>
 
         <updated>2024-02-27T12:00:00+11:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     So, if you need a package that’s part of your OS that didn’t get installed at install time, you can install them later with apt or dnf. And, some packages on your computer may be written in Python. The collection of software that makes up&hellip;
                 ]]>
@@ -772,7 +795,7 @@ where the versions of the packages is different.</p>
         <id>https://capnkernel.github.io/right-angle-mounting-of-fuses-a-small-adaptor-board.html</id>
 
         <updated>2023-01-26T12:00:00+11:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     So an ongoing project of mine is an autopilot for my boat. Here’s the latest incarnation: The highest point on the board is the red fuse in the middle of the board, which is made even higher by the fuse holder underneath it. 21mm is&hellip;
                 ]]>
@@ -895,7 +918,7 @@ of the actual adaptor PCBs.</p>
         <id>https://capnkernel.github.io/planter-boxes-using-corflute-and-milk-crates.html</id>
 
         <updated>2023-01-06T12:00:00+11:00</updated>
-            <summary>
+            <summary type="html">
                 <![CDATA[
                     (Note this is from 2023; we’ve moved since then) There’s no soil where we live, just a concrete space. Everything we plant has to be in a container of some sort, and our soil (3m² of it) was shipped in on a truck: When exploring&hellip;
                 ]]>
